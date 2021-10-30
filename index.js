@@ -30,6 +30,13 @@ async function run () {
             const services = await cursor.toArray();
             res.send(services)
         })
+        //get booked services API
+
+        app.get('/booked-services', async(req, res) => {
+            const cursor = bookingCollection.find({});
+            const bookedServices = await cursor.toArray();
+            res.send(bookedServices)
+        })
         //get single service API
         app.get('/services/:id', async(req, res) => {
             const id = req.params.id;
