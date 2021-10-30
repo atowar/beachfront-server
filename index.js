@@ -40,10 +40,10 @@ async function run () {
 
         //add booking API
 
-        app.post('/mybooking', async(req, res) => {
-            const myBooking = req.body;
-            console.log('my booking', myBooking);
-            res.send('Booking Processed')
+        app.post('/booking', async(req, res) => {
+            const booking = req.body;
+            const result = await bookingCollection.insertOne(booking);
+            res.json(result)
         })
     }
     finally {
