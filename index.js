@@ -21,6 +21,7 @@ async function run () {
         await client.connect();
         const database = client.db('beachfront');
         const serviceCollection = database.collection('services');
+        const bookingCollection = database.collection('booking');
 
         //get services API
 
@@ -35,6 +36,14 @@ async function run () {
             const query = {_id: ObjectId(id)}
             const service = await serviceCollection.findOne(query)
             res.json(service)
+        });
+
+        //add booking API
+
+        app.post('/mybooking', async(req, res) => {
+            const myBooking = req.body;
+            console.log('my booking', myBooking);
+            res.send('Booking Processed')
         })
     }
     finally {
