@@ -66,6 +66,13 @@ async function run () {
             const result = await contactCollection.insertOne(contactsInfo);
             res.json(result)
         })
+        //add new services
+
+        app.post('/services', async(req, res) => {
+            const serviceCollection = req.body;
+            const result = await serviceCollection.insertOne(services);
+            res.json(result)
+        })
     }
     finally {
         // await client.close()
