@@ -78,7 +78,18 @@ async function run () {
             const query = {_id: ObjectId(id) };
             const result = await bookingCollection.deleteOne(query)
             console.log('deleting services by id', result );
-            res.json('1')
+            res.json(result)
+        }),
+           //DELETE Booking
+           app.patch('/services/:id', async(req, res) => {
+            const id = req.params.id;
+            const data = req.body;
+            const result = await bookingCollection.updateOne(
+                {"_id": ObjectId(id)},
+                  {$set: data}                
+                )
+            
+            res.json(result)
         })
     }
     finally {
