@@ -1,7 +1,6 @@
 const express = require('express');
 const {MongoClient} = require('mongodb');
 require('dotenv').config();
-
 const cors = require('cors');
 const ObjectId = require('mongodb').ObjectId;
 
@@ -30,20 +29,20 @@ async function run () {
             const cursor = serviceCollection.find({});
             const services = await cursor.toArray();
             res.send(services)
-        })
+        });
         //get booked services API
 
         app.get('/booked-services', async(req, res) => {
             const cursor = bookingCollection.find({});
             const bookedServices = await cursor.toArray();
             res.send(bookedServices)
-        })
+        });
         //get contacts info API
         app.get('/contact-details', async(req, res) => {
             const cursor = contactCollection.find({});
             const contactInfo = await cursor.toArray();
             res.send(contactInfo)
-        })
+        });
         //get single service API
         app.get('/services/:id', async(req, res) => {
             const id = req.params.id;
@@ -58,20 +57,28 @@ async function run () {
             const booking = req.body;
             const result = await bookingCollection.insertOne(booking);
             res.json(result)
-        })
+        });
         //add contact info API
 
         app.post('/contacts-info', async(req, res) => {
             const contactsInfo = req.body;
             const result = await contactCollection.insertOne(contactsInfo);
             res.json(result)
-        })
+        });
         //add new services
 
         app.post('/services', async(req, res) => {
             const addedServices = req.body;
             const result = await serviceCollection.insertOne(addedServices);
             res.json(result)
+        });
+        //DELETE Booking
+        app.delete('/services/:id', async(req, res) => {
+            const id = req.params.id;
+            const query = {_id: ObjectId(id) };
+            const result = await bookingCollection.deleteOne(query)
+            console.log('deleting services by id', result );
+            res.json('1')
         })
     }
     finally {
